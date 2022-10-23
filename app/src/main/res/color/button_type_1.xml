@@ -7,5 +7,5 @@
     <!--When Button is in selected state -->
     <item android:state_selected="true" android:color="#F3FF51" />
     <!--Default Background Color -->
-    <item android:color="#EFFA5E" />
+    <item android:color="#FCD64E" />
 </selector>
