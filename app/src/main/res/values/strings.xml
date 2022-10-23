@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Quiz Builder</string>
+    <string name="welcome">Quiz Builder</string>
+    <string name="difficulty">Choose a difficulty:</string>
+    <string name="easy">Easy</string>
+    <string name="Medium">Medium</string>
+    <string name="Hard">Hard</string>
+    <string name="NextQuestion">Next Question</string>
+    <string name="streak">Streak:</string>
+    <string name="question">Question:</string>
+    <string name="out_of">/</string>
+</resources>
