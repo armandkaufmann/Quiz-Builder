@@ -46,6 +46,8 @@ public class Activity_2 extends AppCompatActivity {
     CountDownTimer timer;
     boolean timerRunning;
     long timerLeft;
+    int PROGRESS_BAR_START = 100;
+    float progress_bar_curr = PROGRESS_BAR_START;
 
     //buttons, views ===============================================================================
     //top bar info
@@ -269,11 +271,14 @@ public class Activity_2 extends AppCompatActivity {
 
     //timer methods ================================================================================
     private void startTimer(){
-        timer = new CountDownTimer(timerLeft, 1000) {
+        timer = new CountDownTimer(timerLeft, 500) {
             @Override
             public void onTick(long l) {
                 timerLeft = l;
                 updateCountDownText();
+                progress_bar_curr = 100 * l / DIFFICULTY_TIME;
+                updateProgressBar();
+                System.out.println(progress_bar_curr);
             }
 
             @Override
@@ -304,6 +309,14 @@ public class Activity_2 extends AppCompatActivity {
         String timeLeftFormatted = String.format("%02d:%02d", minutes,seconds);
 
         textViewProgressBarNum.setText(timeLeftFormatted);
+    }
+
+    private void updateProgressBar(){
+        progressBarTimer.setProgress((int) progress_bar_curr);
+    }
+
+    private void resetProgressBar(){
+        progress_bar_curr = PROGRESS_BAR_START;
     }
 
 
