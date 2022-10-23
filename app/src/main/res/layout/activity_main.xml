@@ -23,12 +23,19 @@
             android:id="@+id/textViewWelcome"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0.4"
             android:fontFamily="@font/orkney_bold"
             android:gravity="center|center_horizontal"
             android:text="@string/welcome"
             android:textColor="#000000"
             android:textSize="32sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/kindpng_2366695" />
 
         <TextView
             android:id="@+id/textViewDifficulty"
@@ -52,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/button_type_2"
                 android:fontFamily="@font/orkney_regular"
                 android:text="@string/easy"
                 android:textSize="20sp" />
@@ -61,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/button_type_1"
                 android:fontFamily="@font/orkney_regular"
                 android:text="@string/Medium"
                 android:textSize="20sp" />
@@ -70,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/button_type_3"
                 android:fontFamily="@font/orkney_regular"
                 android:text="@string/Hard"
                 android:textSize="20sp" />

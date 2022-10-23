@@ -331,7 +331,7 @@ public class Activity_2 extends AppCompatActivity {
     }//end updateStreak method
 
     private void resetStreak(){
-        streak = 1;
+        streak = 0;
     }//end resetStreak
 
     private void updateCurrQuestionNum(){

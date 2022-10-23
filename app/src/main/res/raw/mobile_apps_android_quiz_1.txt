@@ -1,4 +1,4 @@
-This is the # of the latest Android version.:12
+This is the # of the latest Android version.:13
 This is the # of the previous Android version.:12
 This is the name of the first Android version named after sweets.:Cupcake
 This subfolder of app/ contains your app's Java source code.:Java
