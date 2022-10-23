@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -41,6 +42,11 @@ public class Activity_2 extends AppCompatActivity {
     int streak;
     int numAnsweredCorrect = 0;
 
+    //variables for timer
+    CountDownTimer timer;
+    boolean timerRunning;
+    long timerLeft;
+
     //buttons, views ===============================================================================
     //top bar info
     CardView cardViewBack; //to go back to the main page
@@ -75,6 +81,7 @@ public class Activity_2 extends AppCompatActivity {
         //data from bundle
         DIFFICULTY_TIME = (long) getIntent().getLongExtra("DIFFICULTY", 90000);
         level = (Level) getIntent().getSerializableExtra("Level");
+        timerLeft = DIFFICULTY_TIME;
 
         //setting up views, buttons
             //top bar
@@ -194,8 +201,11 @@ public class Activity_2 extends AppCompatActivity {
     }
 
     private void startQuestion(){
-        if (loadNewQuestionAndAnswer()){ //if we still have definitions/answers
-            loadAllAnswers();
+        if (loadNewQuestionAndAnswer()){ //if we still have definitions/answers, loads the question as well
+            loadAllAnswers(); //loading all the answers
+            enableCardViewClickable(); //enabling the cards which hold the answers choices to be clickable
+            disableButtonNextQuestionClickable(); //disabling the next question button
+            startTimer(); //starting the timer
         }
     }
 
@@ -257,10 +267,51 @@ public class Activity_2 extends AppCompatActivity {
         numQuestions = termList.size();
     }//end setTotalQuestionsNum
 
+    //timer methods ================================================================================
+    private void startTimer(){
+        timer = new CountDownTimer(timerLeft, 1000) {
+            @Override
+            public void onTick(long l) {
+                timerLeft = l;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                timerRunning = false;
+                stopTimer();
+            }
+        }.start();
+
+        timerRunning = true;
+    }
+
+    private void stopTimer(){
+        timer.cancel();
+        timerLeft = DIFFICULTY_TIME;
+        updateCountDownText();
+    }
+
+    private void pauseTimer(){
+        timer.cancel();
+        timerRunning = false;
+    }
+
+    private void updateCountDownText(){
+        int minutes = (int) (timerLeft / 1000) / 60; //if adding minutes
+        int seconds = (int) (timerLeft / 1000) % 60;
+
+        String timeLeftFormatted = String.format("%02d:%02d", minutes,seconds);
+
+        textViewProgressBarNum.setText(timeLeftFormatted);
+    }
+
+
     //listeners ====================================================================================
     private View.OnClickListener cardViewBackListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            timer.cancel();
             Intent i = new Intent(Activity_2.this, MainActivity.class);
             startActivity(i);
         }
