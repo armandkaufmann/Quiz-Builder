@@ -19,6 +19,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewBack"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -36,6 +37,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewStreak"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -69,6 +71,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewQuestionTracker"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -132,6 +135,9 @@
                 android:id="@+id/textViewQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:autoSizeMaxTextSize="32sp"
+                android:autoSizeMinTextSize="18sp"
+                android:autoSizeStepGranularity="2sp"
                 android:gravity="center|center_horizontal"
                 android:text="TextView" />
         </androidx.cardview.widget.CardView>
@@ -200,6 +206,7 @@
                 android:padding="10dp">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewAnswer3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
@@ -210,7 +217,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/textViewAnswer3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:elevation="2dp"
@@ -219,6 +226,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewAnswer4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
@@ -229,7 +237,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/textViewAnswer4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:elevation="2dp"
@@ -261,7 +269,7 @@
             android:layout_weight="0.25">
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/progressBarTimer"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -281,9 +289,9 @@
                 android:textColor="#000000"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/progressBar"
-                app:layout_constraintStart_toStartOf="@+id/progressBar"
-                app:layout_constraintTop_toTopOf="@+id/progressBar"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarTimer"
+                app:layout_constraintStart_toStartOf="@+id/progressBarTimer"
+                app:layout_constraintTop_toTopOf="@+id/progressBarTimer"
                 app:layout_constraintVertical_bias="0.448" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
