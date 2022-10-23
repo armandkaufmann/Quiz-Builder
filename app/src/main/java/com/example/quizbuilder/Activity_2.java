@@ -3,20 +3,19 @@ package com.example.quizbuilder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -26,19 +25,21 @@ public class Activity_2 extends AppCompatActivity {
     long DIFFICULTY_TIME;
 
     //setting up the data structures for the text file =============================================
-    ArrayList<String> defList = new ArrayList<String>(); //to hold the definitions
-    ArrayList<String> termList = new ArrayList<String>(); //to hold the terms
+    ArrayList<String> defList = new ArrayList<String>(); //to hold the definitions/questions
+    ArrayList<String> termList = new ArrayList<String>(); //to hold the terms/answers
     HashMap<String, String> hash = new HashMap<String, String>(); //to hold the key value pairs of terms and definitions
 
     //variables for main quiz logic ================================================================
-    String answer;
+    String currAnswer;
+    String currQuestion;
     boolean questionIsAnswered = false;
     boolean questionIsCorrect = false;
 
     //variables for UI logic =======================================================================
     int numQuestions;
-    int currQuestion;
+    int currQuestionNum;
     int streak;
+    int numAnsweredCorrect = 0;
 
     //buttons, views ===============================================================================
     //top bar info
@@ -65,9 +66,6 @@ public class Activity_2 extends AppCompatActivity {
     //progress bar
     ProgressBar progressBarTimer; //to visually show the time left
     TextView textViewProgressBarNum; //to display time left in numbers
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,15 +118,20 @@ public class Activity_2 extends AppCompatActivity {
         Collections.shuffle(defList); //shuffling the definitions
 
         //things to do at the start, preparation of UI
-        numQuestions = termList.size();
-        currQuestion = 1;
-        streak = 1;
+        setTotalQuestionsNum();
+        updateTotalQuestionsNum();
+        currQuestionNum = 1;
+        updateCurrQuestionNum();
+        resetStreak();
+        updateStreak();
         disableButtonNextQuestionClickable(); //disabling the next question button
-        textViewTotalNumQuestions.setText(Integer.toString(numQuestions));
+
+        //starting the quiz
+        startQuestion();
     }//end onCreate method
 
 
-    //methods for app ==============================================================================
+    //main methods for app =========================================================================
     private void readFile() {
         String str = null;
         BufferedReader br = null;
@@ -156,35 +159,110 @@ public class Activity_2 extends AppCompatActivity {
         }
     }//end createHashDefTerms method
 
+    private boolean loadNewQuestionAndAnswer(){ //gets new question and answer
+        //returns false if there are no more definitions/questions to get
+        //returns true of there are more definitions/questions to get
+        if (defList.size() > 0){
+            currQuestion = defList.get(0); //getting the current question from the list
+            defList.remove(0); //removing the question from the list
+
+            currAnswer = hash.get(currQuestion);
+            updateQuestion();
+            return true;
+        }else{
+            return false;
+        }
+
+    }//end loadNewQuestionAndAnswer method
+
+    private void loadAllAnswers(){
+        Collections.shuffle(termList);
+
+        ArrayList<String> answers = new ArrayList<String>();
+        answers.add(currAnswer);
+
+        int counter = 0;
+        while (answers.size() <= 3){ //while the list of the answers array is smaller than or equal to 4, 4 answers
+            if (!answers.contains(termList.get(counter)) && !termList.get(counter).equals(currAnswer)){
+                //if the term to add is currently not in the list, and the term is not the answer
+                answers.add(termList.get(counter));
+            }
+            counter++;
+        }
+        Collections.shuffle(answers);
+        updateAnswerChoices(answers);
+    }
+
+    private void startQuestion(){
+        if (loadNewQuestionAndAnswer()){ //if we still have definitions/answers
+            loadAllAnswers();
+        }
+    }
+
+
+
+    //secondary methods for app ====================================================================
+    private void updateQuestion(){
+        textViewQuestion.setText(currQuestion);
+    }//end updateQuestion method
+
+    private void updateAnswerChoices(ArrayList<String> answers){
+        textViewAnswer1.setText(answers.get(0));
+        textViewAnswer2.setText(answers.get(1));
+        textViewAnswer3.setText(answers.get(2));
+        textViewAnswer4.setText(answers.get(3));
+    }//end updateAnswerChoices method
+
     private void disableCardViewClickable(){
         cardViewAnswer1.setClickable(false);
         cardViewAnswer2.setClickable(false);
         cardViewAnswer3.setClickable(false);
         cardViewAnswer4.setClickable(false);
-    }
+    }//end disableCardViewClickable method
 
     private void enableCardViewClickable(){
         cardViewAnswer1.setClickable(true);
         cardViewAnswer2.setClickable(true);
         cardViewAnswer3.setClickable(true);
         cardViewAnswer4.setClickable(true);
-    }
+    }//end enableCardViewClickable method
 
     private void disableButtonNextQuestionClickable(){
         buttonNextQuestion.setClickable(false);
         buttonNextQuestion.setBackgroundColor(Color.parseColor("#95989c"));
-    }
+    }//end disableButtonNextQuestionClickable method
 
-    private void enableBUttonNextQuestionClickable(){
+    private void enableButtonNextQuestionClickable(){
         buttonNextQuestion.setClickable(true);
         buttonNextQuestion.setBackgroundColor(Color.parseColor("#4b74fa"));
-    }
+    }//end enableButtonNextQuestionClickable method
+
+    private void updateStreak(){
+        textViewStreakNum.setText(Integer.toString(streak));
+    }//end updateStreak method
+
+    private void resetStreak(){
+        streak = 1;
+    }//end resetStreak
+
+    private void updateCurrQuestionNum(){
+        textViewCurrQuestionNum.setText(Integer.toString(currQuestionNum));
+    }//end updateCurrQuestionNum
+
+    private void updateTotalQuestionsNum(){
+        textViewTotalNumQuestions.setText(Integer.toString(numQuestions));
+    }//end updateTotalQuestionsNum
+
+    private void setTotalQuestionsNum(){
+        numQuestions = termList.size();
+    }//end setTotalQuestionsNum
 
     //listeners ====================================================================================
     private View.OnClickListener cardViewBackListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            Intent i = new Intent(Activity_2.this, MainActivity.class);
+            startActivity(i);
         }
     }; //end cardViewBackListener
 

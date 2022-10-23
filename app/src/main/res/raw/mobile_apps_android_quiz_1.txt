@@ -1,7 +1,7 @@
 This is the # of the latest Android version.:12
 This is the # of the previous Android version.:12
 This is the name of the first Android version named after sweets.:Cupcake
-This subforlder of app/ contains your app's Java source code.:Java
+This subfolder of app/ contains your app's Java source code.:Java
 This subfolder of app/ contains all the resources of your app such as layout files, images, themes, and strings:"Res" or Resource folder
 This is what Android calls what in other programming environments might be called ‘forms’ or ‘pages’ that the user interacts with.:Activity
 An Android APK file has more in common with this type of file than an .exe file.:.ZIP file

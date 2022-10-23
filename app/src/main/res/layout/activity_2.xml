@@ -135,11 +135,15 @@
                 android:id="@+id/textViewQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:autoSizeMaxTextSize="32sp"
                 android:autoSizeMinTextSize="18sp"
                 android:autoSizeStepGranularity="2sp"
+                android:fontFamily="@font/orkney_medium"
                 android:gravity="center|center_horizontal"
-                android:text="TextView" />
+                android:lineSpacingExtra="4sp"
+                android:text="TextView"
+                android:textSize="22sp" />
         </androidx.cardview.widget.CardView>
 
         <TableLayout
@@ -159,7 +163,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewAnswer1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
@@ -172,14 +176,17 @@
                         android:id="@+id/textViewAnswer1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:elevation="2dp"
+                        android:fontFamily="@font/lunchtype_regular"
                         android:gravity="center|center_horizontal"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="16sp" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewAnswer2"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
@@ -192,9 +199,12 @@
                         android:id="@+id/textViewAnswer2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:elevation="2dp"
+                        android:fontFamily="@font/lunchtype_regular"
                         android:gravity="center|center_horizontal"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="16sp" />
                 </androidx.cardview.widget.CardView>
             </TableRow>
 
@@ -207,7 +217,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewAnswer3"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
@@ -220,14 +230,17 @@
                         android:id="@+id/textViewAnswer3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:elevation="2dp"
+                        android:fontFamily="@font/lunchtype_regular"
                         android:gravity="center|center_horizontal"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="16sp" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewAnswer4"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
@@ -240,9 +253,12 @@
                         android:id="@+id/textViewAnswer4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:elevation="2dp"
+                        android:fontFamily="@font/lunchtype_regular"
                         android:gravity="center|center_horizontal"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="16sp" />
                 </androidx.cardview.widget.CardView>
             </TableRow>
 
