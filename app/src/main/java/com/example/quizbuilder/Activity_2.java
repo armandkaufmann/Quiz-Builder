@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class Activity_2 extends AppCompatActivity {
 
     //variables for UI logic =======================================================================
     int numQuestions;
-    int currQuestionNum;
+    int currQuestionNum = 1;
     int streak;
     int numAnsweredCorrect = 0;
 
@@ -129,7 +130,6 @@ public class Activity_2 extends AppCompatActivity {
         //things to do at the start, preparation of UI
         setTotalQuestionsNum();
         updateTotalQuestionsNum();
-        currQuestionNum = 1;
         updateCurrQuestionNum();
         resetStreak();
         updateStreak();
@@ -205,15 +205,92 @@ public class Activity_2 extends AppCompatActivity {
     private void startQuestion(){
         if (loadNewQuestionAndAnswer()){ //if we still have definitions/answers, loads the question as well
             loadAllAnswers(); //loading all the answers
+
             enableCardViewClickable(); //enabling the cards which hold the answers choices to be clickable
             disableButtonNextQuestionClickable(); //disabling the next question button
+            resetCardViews();
+
+            updateCurrQuestionNum();
+            updateStreak();
+
+            stopTimer();
             startTimer(); //starting the timer
+        }
+    }
+
+    private void answerPressed(String stringAnswer){ //user clicked on one of the answers to answer the question
+        disableCardViewClickable(); //disabling the cards from being clicked
+        enableButtonNextQuestionClickable(); //enabling the next question button to be pressed
+
+        if (timerRunning){
+            pauseTimer();
+        }
+
+        if (stringAnswer != null){ //if the user pressed an answer before the timer ran out
+            if (currAnswer.equals(stringAnswer)){ //user got the answer correct
+                revealAnswerCorrectPressed();
+                streak += 1;
+                numAnsweredCorrect += 1;
+            }else{ //user did not get the correct answer
+                revealAnswerWrongPressed();
+                resetStreak();
+            }
+        }else{ //if the user did not press an answer before the timer ran out
+            revealAnswerWrongPressed();
+            resetStreak();
+        }
+
+        currQuestionNum += 1;
+        }
+
+    private void revealAnswerCorrectPressed(){
+        if (((TextView)cardViewAnswer1.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView1 was pressed and is correct
+            cardViewAnswer1.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }else if (((TextView)cardViewAnswer2.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView2 was pressed and is correct
+            cardViewAnswer2.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }else if (((TextView)cardViewAnswer3.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView3 was pressed and is correct
+            cardViewAnswer3.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }else if (((TextView)cardViewAnswer4.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView4 was pressed and is correct
+            cardViewAnswer4.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }
+    }
+
+    private void revealAnswerWrongPressed(){
+        if (((TextView)cardViewAnswer1.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView1 was pressed and is correct
+            cardViewAnswer1.setCardBackgroundColor(Color.parseColor("#64f575")); //set green
+        }else{
+            cardViewAnswer1.setCardBackgroundColor(Color.parseColor("#f56464")); //set red if wrong
+        }
+
+        if (((TextView)cardViewAnswer2.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView2 was pressed and is correct
+            cardViewAnswer2.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }else{
+            cardViewAnswer2.setCardBackgroundColor(Color.parseColor("#f56464"));
+        }
+
+        if (((TextView)cardViewAnswer3.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView3 was pressed and is correct
+            cardViewAnswer3.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }else{
+            cardViewAnswer3.setCardBackgroundColor(Color.parseColor("#f56464"));
+        }
+
+        if (((TextView)cardViewAnswer4.getChildAt(0)).getText().toString().equals(currAnswer)){ //if the cardView4 was pressed and is correct
+            cardViewAnswer4.setCardBackgroundColor(Color.parseColor("#64f575"));
+        }else{
+            cardViewAnswer4.setCardBackgroundColor(Color.parseColor("#f56464"));
         }
     }
 
 
 
     //secondary methods for app ====================================================================
+    private void resetCardViews(){
+        cardViewAnswer1.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        cardViewAnswer2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        cardViewAnswer3.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        cardViewAnswer4.setCardBackgroundColor(Color.parseColor("#ffffff"));
+    }
+
     private void updateQuestion(){
         textViewQuestion.setText(currQuestion);
     }//end updateQuestion method
@@ -278,13 +355,14 @@ public class Activity_2 extends AppCompatActivity {
                 updateCountDownText();
                 progress_bar_curr = 100 * l / DIFFICULTY_TIME;
                 updateProgressBar();
-                System.out.println(progress_bar_curr);
             }
 
             @Override
             public void onFinish() {
                 timerRunning = false;
-                stopTimer();
+                pauseTimer();
+                progressBarTimer.setProgress(0);
+                answerPressed(null);
             }
         }.start();
 
@@ -292,13 +370,19 @@ public class Activity_2 extends AppCompatActivity {
     }
 
     private void stopTimer(){
-        timer.cancel();
+        if (timerRunning){
+            timer.cancel();
+        }
         timerLeft = DIFFICULTY_TIME;
         updateCountDownText();
+        resetProgressBar();
+        timerRunning = false;
     }
 
     private void pauseTimer(){
-        timer.cancel();
+        if (timerRunning){
+            timer.cancel();
+        }
         timerRunning = false;
     }
 
@@ -317,6 +401,7 @@ public class Activity_2 extends AppCompatActivity {
 
     private void resetProgressBar(){
         progress_bar_curr = PROGRESS_BAR_START;
+        updateProgressBar();
     }
 
 
@@ -333,6 +418,7 @@ public class Activity_2 extends AppCompatActivity {
     private View.OnClickListener cardViewAnswer1Listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            answerPressed(((TextView)cardViewAnswer1.getChildAt(0)).getText().toString());
 
         }
     }; //end cardViewAnswer1Listener
@@ -340,24 +426,28 @@ public class Activity_2 extends AppCompatActivity {
     private View.OnClickListener cardViewAnswer2Listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            answerPressed(((TextView)cardViewAnswer2.getChildAt(0)).getText().toString());
         }
     }; //end cardViewAnswer2Listener
 
     private View.OnClickListener cardViewAnswer3Listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            answerPressed(((TextView)cardViewAnswer3.getChildAt(0)).getText().toString());
         }
     }; //end cardViewAnswer3Listener
 
     private View.OnClickListener cardViewAnswer4Listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            answerPressed(((TextView)cardViewAnswer4.getChildAt(0)).getText().toString());
         }
     }; //end cardViewAnswer4Listener
 
     private View.OnClickListener buttonNextQuestionListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            startQuestion();
         }
     }; //end buttonNextQuestionListener
 }
