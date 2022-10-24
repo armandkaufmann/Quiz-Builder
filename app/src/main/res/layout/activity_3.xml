@@ -33,7 +33,7 @@
                 android:layout_gravity="bottom|center|center_horizontal"
                 android:fontFamily="@font/orkney_medium"
                 android:text="Good Job!"
-                android:textSize="22sp" />
+                android:textSize="24sp" />
         </FrameLayout>
 
         <androidx.cardview.widget.CardView
