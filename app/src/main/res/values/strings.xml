@@ -9,4 +9,14 @@
     <string name="streak">Streak:</string>
     <string name="question">Question:</string>
     <string name="out_of">/</string>
+    <string name="results">Results:</string>
+    <string name="ratingGood">Good Job!</string>
+    <string name="ratingBad">Try Again.</string>
+    <string name="ratingPerfect">Perfect!</string>
+    <string name="score">Score:</string>
+    <string name="Highest_Streak">Highest Streak:</string>
+    <string name="time_per_question">Time Per Question:</string>
+    <string name="retry">Retry</string>
+    <string name="Menu">Menu</string>
+    <string name="Difficulty">Difficulty:</string>
 </resources>

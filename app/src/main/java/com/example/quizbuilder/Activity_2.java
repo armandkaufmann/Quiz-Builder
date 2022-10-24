@@ -217,6 +217,21 @@ public class Activity_2 extends AppCompatActivity {
 
             stopTimer();
             startTimer(); //starting the timer
+        }else{
+            streakHistory.add(streak); //adding the last streak
+
+            Intent i = new Intent(Activity_2.this, Activity_3.class);
+            //bundling the data
+            i.putExtra("Level", level); //level
+            i.putExtra("DIFFICULTY", DIFFICULTY_TIME); //difficulty
+
+            i.putExtra("numQuestions", numQuestions); //number of questions
+            i.putExtra("numAnsweredCorrect", numAnsweredCorrect); //number of questions that were correct
+
+            i.putExtra("streakHistory", streakHistory); //streak history
+            i.putExtra("timePerQuestionHistory", timePerQuestionHistory); //time per question
+
+            startActivity(i);
         }
     }
 
