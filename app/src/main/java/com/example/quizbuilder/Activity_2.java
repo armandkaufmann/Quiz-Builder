@@ -42,12 +42,14 @@ public class Activity_2 extends AppCompatActivity {
     int currQuestionNum = 1;
     int streak;
     int numAnsweredCorrect = 0;
+    ArrayList<Integer> streakHistory = new ArrayList<Integer>(); //getting the streak history, used for longest streak
+    ArrayList<Long> timePerQuestionHistory = new ArrayList<Long>(); //to get the time per question
 
     //variables for timer
-    CountDownTimer timer;
-    boolean timerRunning;
-    long timerLeft;
-    int PROGRESS_BAR_START = 100;
+    CountDownTimer timer; //timer object to countdown per question
+    boolean timerRunning; //check if the timer is running
+    long timerLeft; //time left in the timer
+    int PROGRESS_BAR_START = 100; //progress bar starting value
     float progress_bar_curr = PROGRESS_BAR_START;
 
     //buttons, views ===============================================================================
@@ -240,6 +242,7 @@ public class Activity_2 extends AppCompatActivity {
             resetStreak();
         }
 
+        timePerQuestionHistory.add(DIFFICULTY_TIME - timerLeft);
         currQuestionNum += 1;
         }
 
@@ -331,6 +334,7 @@ public class Activity_2 extends AppCompatActivity {
     }//end updateStreak method
 
     private void resetStreak(){
+        streakHistory.add(streak);
         streak = 0;
     }//end resetStreak
 
@@ -365,7 +369,6 @@ public class Activity_2 extends AppCompatActivity {
                 answerPressed(null);
             }
         }.start();
-
         timerRunning = true;
     }
 
