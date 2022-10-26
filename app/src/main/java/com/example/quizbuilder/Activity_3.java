@@ -16,11 +16,11 @@ public class Activity_3 extends AppCompatActivity {
     Level level;
     Long DIFFICULTY_TIME;
 
-    int numQuestions;
-    int numAnsweredCorrect;
+    int numQuestions; //number of total questions
+    int numAnsweredCorrect; //number of questions answered correctly
 
-    ArrayList<Integer> streakHistory;
-    ArrayList<Long> timePerQuestionHistory;
+    ArrayList<Integer> streakHistory; //history of the user's streak
+    ArrayList<Long> timePerQuestionHistory; //time spent per question
 
     //variables needed for UI logic
     long timePerQuestion;
@@ -79,7 +79,7 @@ public class Activity_3 extends AppCompatActivity {
 
     }//end onCreate method
 
-    private void getTimePerQuestion(){
+    private void getTimePerQuestion(){ //calculating the average time spent per question
         long sum = 0;
         for (int i = 0; i < timePerQuestionHistory.size(); i++){
             sum += timePerQuestionHistory.get(i);
@@ -88,7 +88,7 @@ public class Activity_3 extends AppCompatActivity {
     }//end getTimePerQuestion method
 
     //methods ======================================================================================
-    private void getDifficultySetText(){
+    private void getDifficultySetText(){ //getting and displaying the difficulty the user completed the quiz on
         if (level == Level.EASY){
             textViewDifficultyText.setText(getResources().getString(R.string.easy));
             textViewDifficultyText.setTextColor(Color.parseColor("#3CFA52")); //green
@@ -99,13 +99,13 @@ public class Activity_3 extends AppCompatActivity {
             textViewDifficultyText.setText(getResources().getString(R.string.Hard));
             textViewDifficultyText.setTextColor(Color.parseColor("#f56464")); //red
         }
-    }
+    }//end getDifficultySetText method
 
-    private void getPercentageCorrect(){
+    private void getPercentageCorrect(){ //calculating the percentage of questions answered correctly
         percentageCorrect = 100 * numAnsweredCorrect / numQuestions;
     }//end getPercentageCorrect method
 
-    private void getHighestStreak(){
+    private void getHighestStreak(){ //getting the highest streak the user had
         int max = 0;
         for (int i = 0; i < streakHistory.size(); i++){
             if (streakHistory.get(i) > max){
@@ -115,31 +115,31 @@ public class Activity_3 extends AppCompatActivity {
         highestStreak = max;
     }//end getHighestStreak method
 
-    private void getRatingToOutput(){
-        if (percentageCorrect <= 50){
+    private void getRatingToOutput(){ //gets the rating of the user based on percentage of questions correct
+        if (percentageCorrect <= 50){ //failed
             textViewResultsRating.setText(getResources().getString(R.string.ratingBad));
             textViewResultsRating.setTextColor(Color.parseColor("#f56464"));
             textViewScorePercentage.setTextColor(Color.parseColor("#f56464"));
-        }else if (percentageCorrect <= 90){
+        }else if (percentageCorrect <= 90){ //passed
             textViewResultsRating.setText(getResources().getString(R.string.ratingGood));
             textViewResultsRating.setTextColor(Color.parseColor("#3CFA52"));
-        }else{
+        }else{ //perfect to almost perfect
             textViewResultsRating.setText(getResources().getString(R.string.ratingPerfect));
             textViewResultsRating.setTextColor(Color.parseColor("#3CFA52"));
         }
     }//end getRatingToOutput method
 
-    private void setScore(){
+    private void setScore(){ //displaying the percentage of correct questions
         String text = String.format("%.2f", percentageCorrect);
         String textFinal = text.concat("%");
         textViewScorePercentage.setText(textFinal);
     }//end setScore
 
-    private void setHighestStreak(){
+    private void setHighestStreak(){ //setting the highest streak the user had
         textViewHighestStreakNum.setText(Integer.toString(highestStreak));
     }//end setHighestStreak
 
-    private void setTimePerQuestion(){
+    private void setTimePerQuestion(){ //setting the time per question
         int minutes = (int) (timePerQuestion / 1000) / 60; //if adding minutes
         int seconds = (int) (timePerQuestion / 1000) % 60;
 

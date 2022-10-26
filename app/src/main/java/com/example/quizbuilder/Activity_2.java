@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,16 +35,14 @@ public class Activity_2 extends AppCompatActivity {
     HashMap<String, String> hash = new HashMap<String, String>(); //to hold the key value pairs of terms and definitions
 
     //variables for main quiz logic ================================================================
-    String currAnswer;
-    String currQuestion;
-    boolean questionIsAnswered = false;
-    boolean questionIsCorrect = false;
+    String currAnswer; //store the string value of the current answer
+    String currQuestion; //store the string value of the current question
 
     //variables for UI logic =======================================================================
-    int numQuestions;
-    int currQuestionNum = 1;
-    int streak;
-    int numAnsweredCorrect = 0;
+    int numQuestions; //total number of questions
+    int currQuestionNum = 1; //current number of question the user is on
+    int streak; //how many answers the user got correct in a row
+    int numAnsweredCorrect = 0; //how many questions were correct
     ArrayList<Integer> streakHistory = new ArrayList<Integer>(); //getting the streak history, used for longest streak
     ArrayList<Long> timePerQuestionHistory = new ArrayList<Long>(); //to get the time per question
 
@@ -158,13 +159,15 @@ public class Activity_2 extends AppCompatActivity {
 
             is.close(); //closing input stream
         } catch (IOException e) {
-            e.printStackTrace();
+            String stackTrace = Log.getStackTraceString(e);
+            Log.w("File-Input Exception: ",stackTrace); //using Log.w to keep a log of IOException
         }catch (Exception e){
-            e.printStackTrace();
+            String stackTrace = Log.getStackTraceString(e);
+            Log.w("Exception: ",stackTrace); //using Log.w to keep track of general exceptions
         }
     }//end readFile method
 
-    private void createHashDefTerms(){
+    private void createHashDefTerms(){ //creating the hasmap of key-value pairs for definitions and terms
         for (int i = 0; i < defList.size(); i++){
             hash.put(defList.get(i), termList.get(i));
         }
@@ -186,7 +189,7 @@ public class Activity_2 extends AppCompatActivity {
 
     }//end loadNewQuestionAndAnswer method
 
-    private void loadAllAnswers(){
+    private void loadAllAnswers(){ //loading array of answers, 1 correct, 3 wrong
         Collections.shuffle(termList);
 
         ArrayList<String> answers = new ArrayList<String>();
@@ -204,7 +207,7 @@ public class Activity_2 extends AppCompatActivity {
         updateAnswerChoices(answers);
     }
 
-    private void startQuestion(){
+    private void startQuestion(){ //starts a new question and multiple choice answers
         if (loadNewQuestionAndAnswer()){ //if we still have definitions/answers, loads the question as well
             loadAllAnswers(); //loading all the answers
 
@@ -217,7 +220,7 @@ public class Activity_2 extends AppCompatActivity {
 
             stopTimer();
             startTimer(); //starting the timer
-        }else{
+        }else{ //if there are no more questions in the definitions list, go to results activity
             streakHistory.add(streak); //adding the last streak
 
             Intent i = new Intent(Activity_2.this, Activity_3.class);
@@ -257,7 +260,7 @@ public class Activity_2 extends AppCompatActivity {
             resetStreak();
         }
 
-        timePerQuestionHistory.add(DIFFICULTY_TIME - timerLeft);
+        timePerQuestionHistory.add(DIFFICULTY_TIME - timerLeft); //tracking the time spent per question
         currQuestionNum += 1;
         }
 
@@ -302,53 +305,53 @@ public class Activity_2 extends AppCompatActivity {
 
 
     //secondary methods for app ====================================================================
-    private void resetCardViews(){
+    private void resetCardViews(){ //resetting the colors of all the multiple choice answers
         cardViewAnswer1.setCardBackgroundColor(Color.parseColor("#ffffff"));
         cardViewAnswer2.setCardBackgroundColor(Color.parseColor("#ffffff"));
         cardViewAnswer3.setCardBackgroundColor(Color.parseColor("#ffffff"));
         cardViewAnswer4.setCardBackgroundColor(Color.parseColor("#ffffff"));
     }
 
-    private void updateQuestion(){
+    private void updateQuestion(){ //loading the new question into the textview
         textViewQuestion.setText(currQuestion);
     }//end updateQuestion method
 
-    private void updateAnswerChoices(ArrayList<String> answers){
+    private void updateAnswerChoices(ArrayList<String> answers){ //updating the multiple choice answers of the card views
         textViewAnswer1.setText(answers.get(0));
         textViewAnswer2.setText(answers.get(1));
         textViewAnswer3.setText(answers.get(2));
         textViewAnswer4.setText(answers.get(3));
     }//end updateAnswerChoices method
 
-    private void disableCardViewClickable(){
+    private void disableCardViewClickable(){ //disable the multiple choice answers from being clickable
         cardViewAnswer1.setClickable(false);
         cardViewAnswer2.setClickable(false);
         cardViewAnswer3.setClickable(false);
         cardViewAnswer4.setClickable(false);
     }//end disableCardViewClickable method
 
-    private void enableCardViewClickable(){
+    private void enableCardViewClickable(){ //enabling the multiple choice answers to being clickable
         cardViewAnswer1.setClickable(true);
         cardViewAnswer2.setClickable(true);
         cardViewAnswer3.setClickable(true);
         cardViewAnswer4.setClickable(true);
     }//end enableCardViewClickable method
 
-    private void disableButtonNextQuestionClickable(){
+    private void disableButtonNextQuestionClickable(){ //disabling the next question button from being clickable
         buttonNextQuestion.setClickable(false);
         buttonNextQuestion.setBackgroundColor(Color.parseColor("#95989c"));
     }//end disableButtonNextQuestionClickable method
 
-    private void enableButtonNextQuestionClickable(){
+    private void enableButtonNextQuestionClickable(){ //enabling the next question button to being clickable
         buttonNextQuestion.setClickable(true);
         buttonNextQuestion.setBackgroundColor(Color.parseColor("#4b74fa"));
     }//end enableButtonNextQuestionClickable method
 
-    private void updateStreak(){
+    private void updateStreak(){ //updating the streak, questions answered correctly in a row
         textViewStreakNum.setText(Integer.toString(streak));
     }//end updateStreak method
 
-    private void resetStreak(){
+    private void resetStreak(){ //resetting the streak, when the user gets a question wrong
         streakHistory.add(streak);
         streak = 0;
     }//end resetStreak
@@ -385,7 +388,7 @@ public class Activity_2 extends AppCompatActivity {
             }
         }.start();
         timerRunning = true;
-    }
+    }//end startTimer method
 
     private void stopTimer(){
         if (timerRunning){
@@ -395,14 +398,14 @@ public class Activity_2 extends AppCompatActivity {
         updateCountDownText();
         resetProgressBar();
         timerRunning = false;
-    }
+    }//end stopTimer method
 
     private void pauseTimer(){
         if (timerRunning){
             timer.cancel();
         }
         timerRunning = false;
-    }
+    }//end pauseTimer method
 
     private void updateCountDownText(){
         int minutes = (int) (timerLeft / 1000) / 60; //if adding minutes
@@ -411,7 +414,7 @@ public class Activity_2 extends AppCompatActivity {
         String timeLeftFormatted = String.format("%02d:%02d", minutes,seconds);
 
         textViewProgressBarNum.setText(timeLeftFormatted);
-    }
+    }//end updateCountDownText method
 
     private void updateProgressBar(){
         progressBarTimer.setProgress((int) progress_bar_curr);
@@ -420,7 +423,7 @@ public class Activity_2 extends AppCompatActivity {
     private void resetProgressBar(){
         progress_bar_curr = PROGRESS_BAR_START;
         updateProgressBar();
-    }
+    } //end resetProgressBar method
 
 
     //listeners ====================================================================================
