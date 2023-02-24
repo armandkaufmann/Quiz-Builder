@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".Activity_3">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:fontFamily="@font/orkney_bold"
             android:gravity="center|center_horizontal"
             android:text="@string/results"
+            android:textColor="#000000"
             android:textSize="30sp" />
 
         <FrameLayout
@@ -65,6 +67,7 @@
                         android:gravity="center"
                         android:paddingRight="5dp"
                         android:text="@string/score"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <TextView
@@ -75,6 +78,7 @@
                         android:fontFamily="@font/orkney_bold"
                         android:gravity="center"
                         android:text="TextView"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -93,6 +97,7 @@
                         android:gravity="center"
                         android:paddingRight="5dp"
                         android:text="@string/Difficulty"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <TextView
@@ -103,6 +108,7 @@
                         android:fontFamily="@font/orkney_bold"
                         android:gravity="center"
                         android:text="TextView"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -121,6 +127,7 @@
                         android:gravity="center"
                         android:paddingRight="5dp"
                         android:text="@string/time_per_question"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <TextView
@@ -131,6 +138,7 @@
                         android:fontFamily="@font/orkney_bold"
                         android:gravity="center"
                         android:text="TextView"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -149,6 +157,7 @@
                         android:gravity="center"
                         android:paddingRight="5dp"
                         android:text="@string/Highest_Streak"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <TextView
@@ -159,6 +168,7 @@
                         android:fontFamily="@font/orkney_bold"
                         android:gravity="center"
                         android:text="TextView"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
